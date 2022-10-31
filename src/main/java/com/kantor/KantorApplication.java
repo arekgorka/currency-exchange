@@ -9,5 +9,4 @@ public class KantorApplication {
     public static void main(String[] args) {
         SpringApplication.run(KantorApplication.class, args);
     }
-
 }
