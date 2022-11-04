@@ -16,7 +16,7 @@ public class CurrencyController {
 
     private final CurrencyService currencyService;
 
-    @GetMapping(value = "bidandask/{code}")
+    @GetMapping(value = "rates/{code}")
     public ResponseEntity<CurrencyDto> getCurrencyBidAndAsk(@PathVariable String code) {
         return ResponseEntity.ok(currencyService.getCurrencyBidAndAsk(code));
     }

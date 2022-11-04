@@ -2,7 +2,6 @@ package com.kantor.webclient.currency;
 
 import com.kantor.domain.dto.CurrencyDto;
 import com.kantor.domain.dto.CurrencyMainDto;
-import com.kantor.domain.dto.CurrencyRatesDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
