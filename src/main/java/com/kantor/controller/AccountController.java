@@ -3,9 +3,10 @@ package com.kantor.controller;
 import com.kantor.domain.dto.AccountDto;
 import com.kantor.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/v1/currency_exchange/accounts")
@@ -34,4 +35,8 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getAccountByUser(userId));
     }
 
+    @GetMapping(value = "history/{userId}")
+    public ResponseEntity<List<AccountDto>> getAccountHistory(@PathVariable Long userId) {
+        return ResponseEntity.ok(accountService.getAccountHistory(userId));
+    }
 }
