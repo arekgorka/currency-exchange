@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CryptoMapper {
 
-    public Bitcoin mapToBitcoin(CryptoDto cryptoDto) {
+    public Bitcoin mapToBitcoin(final CryptoDto cryptoDto) {
         return new Bitcoin(
                 cryptoDto.getBuy(),
                 cryptoDto.getSell(),

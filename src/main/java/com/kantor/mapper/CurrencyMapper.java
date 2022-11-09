@@ -1,6 +1,5 @@
 package com.kantor.mapper;
 
-import com.kantor.domain.currency.Bitcoin;
 import com.kantor.domain.currency.Euro;
 import com.kantor.domain.currency.SwissFranc;
 import com.kantor.domain.currency.USDollar;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CurrencyMapper {
 
-    public USDollar mapToUSDDollar(CurrencyDto currencyDto) {
+    public USDollar mapToUSDDollar(final CurrencyDto currencyDto) {
         return new USDollar(
                 currencyDto.getBuy(),
                 currencyDto.getSell(),
@@ -18,7 +17,7 @@ public class CurrencyMapper {
         );
     }
 
-    public Euro mapToEuro(CurrencyDto currencyDto) {
+    public Euro mapToEuro(final CurrencyDto currencyDto) {
         return new Euro(
                 currencyDto.getBuy(),
                 currencyDto.getSell(),
@@ -26,7 +25,7 @@ public class CurrencyMapper {
         );
     }
 
-    public SwissFranc mapToSwissFranc(CurrencyDto currencyDto) {
+    public SwissFranc mapToSwissFranc(final CurrencyDto currencyDto) {
         return new SwissFranc(
                 currencyDto.getBuy(),
                 currencyDto.getSell(),

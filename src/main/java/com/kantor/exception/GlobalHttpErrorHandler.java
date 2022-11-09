@@ -18,4 +18,14 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleTitleAlreadyExistException(UserAlreadyExistException exception ) {
         return new ResponseEntity<>("User already exist.", HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(AccountBallanceNotFoundException.class)
+    public ResponseEntity<Object> handleAccountBallanceNotFoundException(AccountBallanceNotFoundException exception) {
+        return new ResponseEntity<>("Account doesn't exist.",HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccountWithdrawalException.class)
+    public ResponseEntity<Object> handleAccountWithdrawalException(AccountWithdrawalException exception) {
+        return new ResponseEntity<>("You don't have enough money.",HttpStatus.BAD_REQUEST);
+    }
 }

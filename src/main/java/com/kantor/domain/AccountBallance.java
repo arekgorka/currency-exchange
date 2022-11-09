@@ -42,5 +42,23 @@ public class AccountBallance {
     @Column(name = "BTC")
     private double btc;
 
+    public AccountBallance(User user) {
+        this.user = user;
+        this.datetime = LocalDate.now();
+        this.pln = 0.00;
+        this.usd = 0.00;
+        this.eur = 0.00;
+        this.chf = 0.00;
+        this.btc = 0.00;
+    }
 
+    public AccountBallance(User user, double pln, double usd, double eur, double chf, double btc) {
+        this.user = user;
+        this.datetime = LocalDate.now();
+        this.pln = pln;
+        this.usd = usd;
+        this.eur = eur;
+        this.chf = chf;
+        this.btc = btc;
+    }
 }
