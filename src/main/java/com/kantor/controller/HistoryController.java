@@ -21,7 +21,7 @@ public class HistoryController {
 
     private final HistoryService historyService;
 
-    @GetMapping(value = "{usd}")
+    @GetMapping(value = "usd")
     public ResponseEntity<List<USDollarDto>> getUSDollarHistory() {
         return ResponseEntity.ok(historyService.getUSDollarHistory());
     }

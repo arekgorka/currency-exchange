@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public abstract class Currency {
     private Long id;
 
     @Column(name = "DATETIME")
-    private LocalDate dateTime;
+    private LocalDateTime dateTime;
 
     @Column(name = "BUY")
     private Double buy;
@@ -34,7 +35,7 @@ public abstract class Currency {
     private String name;
 
     public Currency(Double buy, Double sell, String name) {
-        this.dateTime = LocalDate.now();
+        this.dateTime = LocalDateTime.now();
         this.buy = buy;
         this.sell = sell;
         this.name = name;

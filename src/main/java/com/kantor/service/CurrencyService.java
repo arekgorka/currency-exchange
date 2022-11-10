@@ -1,6 +1,5 @@
 package com.kantor.service;
 
-import com.kantor.domain.Currencies;
 import com.kantor.domain.CurrenciesEnum;
 import com.kantor.domain.currency.Euro;
 import com.kantor.domain.currency.SwissFranc;
@@ -11,9 +10,7 @@ import com.kantor.repository.EuroRepository;
 import com.kantor.repository.SwissFrancRepository;
 import com.kantor.repository.USDollarRepository;
 import com.kantor.webclient.currency.CurrencyWebClient;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
