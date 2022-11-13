@@ -3,14 +3,17 @@ package com.kantor.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity(name = "ACCOUNT_BALLANCES")
 public class AccountBallance {
 
@@ -25,7 +28,7 @@ public class AccountBallance {
     private User user;
 
     @Column(name = "DATETIME")
-    private LocalDate datetime;
+    private LocalDateTime datetime;
 
     @Column(name = "PLN")
     private double pln;
@@ -44,7 +47,7 @@ public class AccountBallance {
 
     public AccountBallance(User user) {
         this.user = user;
-        this.datetime = LocalDate.now();
+        this.datetime = LocalDateTime.now();
         this.pln = 0.00;
         this.usd = 0.00;
         this.eur = 0.00;
@@ -54,7 +57,7 @@ public class AccountBallance {
 
     public AccountBallance(User user, double pln, double usd, double eur, double chf, double btc) {
         this.user = user;
-        this.datetime = LocalDate.now();
+        this.datetime = LocalDateTime.now();
         this.pln = pln;
         this.usd = usd;
         this.eur = eur;

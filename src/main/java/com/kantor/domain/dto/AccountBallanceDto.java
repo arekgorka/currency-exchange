@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -13,15 +14,14 @@ public class AccountBallanceDto {
 
     private Long id;
     private Long userId;
-    private LocalDate datetime;
+    private LocalDateTime datetime;
     private double pln;
     private double usd;
     private double eur;
     private double chf;
     private double btc;
 
-    public AccountBallanceDto(Long userId, double pln, double usd, double eur, double chf, double btc) {
-        this.userId = userId;
+    public AccountBallanceDto(double pln, double usd, double eur, double chf, double btc) {
         this.pln = pln;
         this.usd = usd;
         this.eur = eur;
@@ -29,8 +29,7 @@ public class AccountBallanceDto {
         this.btc = btc;
     }
 
-    public AccountBallanceDto(Long userId, LocalDate datetime, double pln, double usd, double eur, double chf, double btc) {
-        this.userId = userId;
+    public AccountBallanceDto(LocalDateTime datetime, double pln, double usd, double eur, double chf, double btc) {
         this.datetime = datetime;
         this.pln = pln;
         this.usd = usd;

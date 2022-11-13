@@ -3,14 +3,16 @@ package com.kantor.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Entity(name = "TRANSACTIONS")
 public class Transaction {
 
@@ -25,7 +27,7 @@ public class Transaction {
     private User user;
 
     @Column(name = "DATETIME")
-    private LocalDate datetime;
+    private LocalDateTime datetime;
 
     @NotNull
     @Column(name = "TRANSACTION")
@@ -33,7 +35,7 @@ public class Transaction {
 
     @NotNull
     @Column(name = "CUR_FROM")
-    private CurrenciesEnum curFrom;
+    private String curFrom;
 
     @NotNull
     @Column(name = "QTY_FROM")
@@ -41,25 +43,35 @@ public class Transaction {
 
     @NotNull
     @Column(name = "CUR_TO")
-    private CurrenciesEnum curTo;
+    private String curTo;
 
     @NotNull
-    @Column(name = "QTY_TO")
-    private double qtyTo;
+    @Column(name = "SUM")
+    private double sum;
 
     @NotNull
     @Column(name = "EXCHANGE_RATE")
     private double exchangeRate;
 
-    public Transaction(User user, BuyOrSell buyOrSell, CurrenciesEnum curFrom, double qtyFrom,
-                       CurrenciesEnum curTo, double qtyTo, double exchangeRate) {
+    public Transaction(User user, BuyOrSell buyOrSell, String curFrom, double qtyFrom,
+                       String curTo) {
         this.user = user;
-        this.datetime = LocalDate.now();
+        this.datetime = LocalDateTime.now();
         this.buyOrSell = buyOrSell;
         this.curFrom = curFrom;
         this.qtyFrom = qtyFrom;
         this.curTo = curTo;
-        this.qtyTo = qtyTo;
+    }
+
+    public Transaction(User user, BuyOrSell buyOrSell, String curFrom, double qtyFrom,
+                       String curTo, double sum, double exchangeRate) {
+        this.user = user;
+        this.datetime = LocalDateTime.now();
+        this.buyOrSell = buyOrSell;
+        this.curFrom = curFrom;
+        this.qtyFrom = qtyFrom;
+        this.curTo = curTo;
+        this.sum = sum;
         this.exchangeRate = exchangeRate;
     }
 }

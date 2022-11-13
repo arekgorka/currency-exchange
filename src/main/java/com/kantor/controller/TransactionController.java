@@ -1,13 +1,14 @@
 package com.kantor.controller;
 
 import com.kantor.domain.dto.TransactionDto;
+import com.kantor.exception.AccountBallanceNotFoundException;
+import com.kantor.exception.UserNotFoundException;
+import com.kantor.exception.WrongValidationException;
 import com.kantor.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,20 +19,22 @@ public class TransactionController {
 
     final private TransactionService transactionService;
 
-    @PostMapping(value = "buy/{userId}")
-    public ResponseEntity<Void> createBuyTransaction(@PathVariable Long userId) {
-        transactionService.createBuyTransaction(userId);
+    @PostMapping(value = "buy/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> createBuyTransaction(@PathVariable Long userId, @RequestBody TransactionDto transactionDto)
+            throws UserNotFoundException, AccountBallanceNotFoundException, WrongValidationException {
+        transactionService.createBuyTransaction(userId, transactionDto);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(value = "sell/{userId}")
-    public ResponseEntity<Void> createSellTransaction(@PathVariable Long userId) {
-        transactionService.createSellTransaction(userId);
+    @PostMapping(value = "sell/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> createSellTransaction(@PathVariable Long userId, @RequestBody TransactionDto transactionDto)
+            throws UserNotFoundException, AccountBallanceNotFoundException, WrongValidationException {
+        transactionService.createSellTransaction(userId, transactionDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "transactionHistory/user/{userId}")
-    public ResponseEntity<List<TransactionDto>> getTransactionsByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<TransactionDto>> getTransactionsByUser(@PathVariable Long userId) throws UserNotFoundException {
         return ResponseEntity.ok(transactionService.getTransactionByUser(userId));
     }
 }

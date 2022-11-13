@@ -28,4 +28,9 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleAccountWithdrawalException(AccountWithdrawalException exception) {
         return new ResponseEntity<>("You don't have enough money.",HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(WrongValidationException.class)
+    public ResponseEntity<Object> handleWrongValidationException(WrongValidationException exception) {
+        return new ResponseEntity<>("Wrong account validation",HttpStatus.BAD_REQUEST);
+    }
 }

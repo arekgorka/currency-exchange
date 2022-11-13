@@ -33,4 +33,8 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         return userMapper.mapToUserDto(user);
     }
+
+    public User findUserById(final Long userId) throws UserNotFoundException {
+        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    }
 }

@@ -39,7 +39,7 @@ public class AccountBallanceController {
     @GetMapping(value = "{userId}")
     public ResponseEntity<AccountBallanceDto> getAccountBalance(@PathVariable Long userId)
             throws UserNotFoundException, AccountBallanceNotFoundException {
-        return ResponseEntity.ok(accountBallanceService.getAccountByUser(userId));
+        return ResponseEntity.ok(accountBallanceService.getAccountDtoByUser(userId));
     }
 
     @GetMapping(value = "history/{userId}")
