@@ -63,10 +63,9 @@ public class Transaction {
         this.curTo = curTo;
     }
 
-    public Transaction(User user, BuyOrSell buyOrSell, String curFrom, double qtyFrom,
-                       String curTo, double sum, double exchangeRate) {
+    public Transaction(User user, LocalDateTime datetime, BuyOrSell buyOrSell, String curFrom, double qtyFrom, String curTo, double sum, double exchangeRate) {
         this.user = user;
-        this.datetime = LocalDateTime.now();
+        this.datetime = datetime;
         this.buyOrSell = buyOrSell;
         this.curFrom = curFrom;
         this.qtyFrom = qtyFrom;

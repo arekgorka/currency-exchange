@@ -33,4 +33,11 @@ public class TransactionDto {
         this.sum = sum;
         this.exchangeRate = exchangeRate;
     }
+
+    public TransactionDto(BuyOrSell buyOrSell, String curFrom, double qtyFrom, String curTo) {
+        this.buyOrSell = buyOrSell;
+        this.curFrom = curFrom;
+        this.qtyFrom = qtyFrom;
+        this.curTo = curTo;
+    }
 }

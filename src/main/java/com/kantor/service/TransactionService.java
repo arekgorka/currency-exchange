@@ -3,6 +3,7 @@ package com.kantor.service;
 import com.kantor.domain.*;
 import com.kantor.domain.dto.TransactionDto;
 import com.kantor.exception.AccountBallanceNotFoundException;
+import com.kantor.exception.CurrencyNotFoundException;
 import com.kantor.exception.UserNotFoundException;
 import com.kantor.exception.WrongValidationException;
 import com.kantor.mapper.AccountBallanceMapper;
@@ -12,6 +13,7 @@ import com.kantor.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,18 +25,17 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
     private final AccountBallanceService accountBallanceService;
-    private final AccountBallanceMapper accountBallanceMapper;
     private final CurrencyService currencyService;
     private final CryptoService cryptoService;
     private final UserRepository userRepository;
 
     public void createBuyTransaction(final Long userId, final TransactionDto transactionDto)
-            throws UserNotFoundException, AccountBallanceNotFoundException, WrongValidationException {
+            throws UserNotFoundException, AccountBallanceNotFoundException, WrongValidationException, CurrencyNotFoundException {
         Transaction transaction = transactionMapper.mapToTransaction(userId, transactionDto);
         //pobranie kursu waluty którą chcemy kupić
         String curFrom = transaction.getCurFrom();
         String curTo = transaction.getCurTo();
-        double buy = getBuyForAnyCurrency(curFrom);
+        double buy = getBuyForAnyCurrencyFromRepository(curFrom); //getBuyForAnyCurrency(curFrom);
         double buyQty = transaction.getQtyFrom();
         //wyliczenie sumy
         double sum = buyQty * buy;
@@ -46,13 +47,14 @@ public class TransactionService {
             double oldCurTo = accountBallanceService.getCurrencyAccountBallance(userId,curTo);
             double newCurTo = oldCurTo - sum;
             //zaktualizowanie stanu konta - zapis nowego stanu konta
-            AccountBallance newAccountBallance = accountBallanceMapper.mapToNewAccountBallance(userId);
+            AccountBallance newAccountBallance = changeToNewAccountBallance(userId);
             updateCurBallance(curFrom, newCurFrom, newAccountBallance);
             updateCurBallance(curTo, newCurTo, newAccountBallance);
             accountBallanceService.saveAccountBallance(newAccountBallance);
             //zapis nowej tranzakcji
             Transaction newTransaction = new Transaction(
                     transaction.getUser(),
+                    LocalDateTime.now(),
                     BuyOrSell.BUY,
                     curFrom,
                     transaction.getQtyFrom(),
@@ -67,12 +69,12 @@ public class TransactionService {
     }
 
     public void createSellTransaction(final Long userId, final TransactionDto transactionDto)
-            throws UserNotFoundException, AccountBallanceNotFoundException, WrongValidationException {
+            throws UserNotFoundException, AccountBallanceNotFoundException, WrongValidationException, CurrencyNotFoundException {
         Transaction transaction = transactionMapper.mapToTransaction(userId, transactionDto);
         //pobranie kursu waluty którą chcemy sprzedać
         String curFrom = transaction.getCurFrom();
         String curTo = transaction.getCurTo();
-        double sell = getSellForAnyCurrency(curFrom);
+        double sell = getSellForAnyCurrencyFromRepository(curFrom); //getSellForAnyCurrency(curFrom);
         double sellQty = transaction.getQtyFrom();
         //wyliczenie sumy
         double sum = sellQty * sell;
@@ -83,13 +85,14 @@ public class TransactionService {
             double oldCurTo = accountBallanceService.getCurrencyAccountBallance(userId,curTo);
             double newCurTo = oldCurTo + sum;
             //zaktualizowanie stanu konta - zapis nowego stanu konta
-            AccountBallance newAccountBallance = accountBallanceMapper.mapToNewAccountBallance(userId);
+            AccountBallance newAccountBallance = changeToNewAccountBallance(userId);
             updateCurBallance(curFrom, newCurFrom, newAccountBallance);
             updateCurBallance(curTo, newCurTo, newAccountBallance);
             accountBallanceService.saveAccountBallance(newAccountBallance);
             //zapis nowej tranzakcji
             Transaction newTransaction = new Transaction(
                     transaction.getUser(),
+                    LocalDateTime.now(),
                     BuyOrSell.SELL,
                     curFrom,
                     sellQty,
@@ -103,25 +106,37 @@ public class TransactionService {
         }
     }
 
+    private AccountBallance changeToNewAccountBallance(final Long userId) throws UserNotFoundException, AccountBallanceNotFoundException {
+        AccountBallance accountBallance = accountBallanceService.getAccountByUser(userId);
+        return new AccountBallance(
+                accountBallance.getUser(),
+                accountBallance.getPln(),
+                accountBallance.getUsd(),
+                accountBallance.getEur(),
+                accountBallance.getChf(),
+                accountBallance.getBtc()
+        );
+    }
+
     public List<TransactionDto> getTransactionByUser(final Long userId) throws UserNotFoundException{
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         List<Transaction> transactions = transactionRepository.findTransactionByUserId(user.getId());
         return transactionMapper.mapToListTransactionDto(transactions);
     }
 
-    public double getBuyForAnyCurrency(String currency) {
+    public double getBuyForAnyCurrencyFromRepository(String currency) throws CurrencyNotFoundException {
         if (currency.equals(Currencies.BTC)) {
-            return cryptoService.getCryptoRates(currency).getBuy();
+            return cryptoService.getCryptoBuyFromRepository(currency);
         } else {
-            return currencyService.getCurrencyBidAndAsk(currency).getBuy();
+            return currencyService.getCurrencyBuyFromRepository(currency);
         }
     }
 
-    public double getSellForAnyCurrency(String currency) {
+    public double getSellForAnyCurrencyFromRepository(String currency) throws CurrencyNotFoundException {
         if (currency.equals(Currencies.BTC)) {
-            return cryptoService.getCryptoRates(currency).getSell();
+            return cryptoService.getCryptoSellFromRepository(currency);
         } else {
-            return currencyService.getCurrencyBidAndAsk(currency).getSell();
+            return currencyService.getCurrencySellFromRepository(currency);
         }
     }
 
@@ -137,7 +152,7 @@ public class TransactionService {
         return curBallance >= sellQty;
     }
 
-    private void updateCurBallance(String cur, double newCur, AccountBallance newAccountBallance) {
+    public void updateCurBallance(String cur, double newCur, AccountBallance newAccountBallance) {
         if (cur.equals(Currencies.USD)) {
             newAccountBallance.setUsd(newCur);
         } else if (cur.equals(Currencies.EUR)) {

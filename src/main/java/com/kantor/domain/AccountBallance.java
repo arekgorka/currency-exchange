@@ -64,4 +64,14 @@ public class AccountBallance {
         this.chf = chf;
         this.btc = btc;
     }
+
+    public AccountBallance(Long id, User user, double pln, double usd, double eur, double chf, double btc) {
+        this.id = id;
+        this.user = user;
+        this.pln = pln;
+        this.usd = usd;
+        this.eur = eur;
+        this.chf = chf;
+        this.btc = btc;
+    }
 }

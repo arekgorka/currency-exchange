@@ -11,9 +11,9 @@ import org.springframework.web.client.RestTemplate;
 public class CurrencyWebClient {
 
     private static final String CURRENCY_URL = "http://api.nbp.pl/api/exchangerates/rates/c/";
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    public CurrencyDto getAskAndBitForCurrency(String code) {
+    public CurrencyDto getAskAndBidForCurrency(String code) {
         CurrencyMainDto currencyMainDto = callGetMethod("{code}", CurrencyMainDto.class, code);
         return CurrencyDto.builder()
                 .code(currencyMainDto.getCode())

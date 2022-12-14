@@ -4,6 +4,7 @@ package com.kantor.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Entity(name = "USERS")
 public class User {
 
@@ -78,5 +80,14 @@ public class User {
         this.accountBallances = new ArrayList<>();
         this.transactions = new ArrayList<>();
         this.orders = new ArrayList<>();
+    }
+
+    public User(Long id, String firstname, String lastname, String login, String password, String mail) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.login = login;
+        this.password = password;
+        this.mail = mail;
     }
 }

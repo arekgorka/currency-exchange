@@ -72,6 +72,7 @@ public class AccountBallanceService {
                     accountBallance.getChf(),
                     accountBallance.getBtc()
             );
+            accountBallanceRepository.save(updatedAccountBallance);
             return accountBallanceMapper.mapToAccountBallanceDto(updatedAccountBallance);
         } else {
             throw new AccountWithdrawalException();

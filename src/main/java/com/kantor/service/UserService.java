@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
 public class UserService {
 
@@ -35,6 +35,6 @@ public class UserService {
     }
 
     public User findUserById(final Long userId) throws UserNotFoundException {
-        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        return userRepository.findUserById(userId).orElseThrow(UserNotFoundException::new);
     }
 }

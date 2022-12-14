@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AccountBallanceMapper {
 
-    private final AccountBallanceService accountBallanceService;
-
     public AccountBallanceDto mapToAccountBallanceDto(final AccountBallance accountBallance) {
         return new AccountBallanceDto(
                 accountBallance.getPln(),
@@ -44,15 +42,4 @@ public class AccountBallanceMapper {
                 .collect(Collectors.toList());
     }
 
-    public AccountBallance mapToNewAccountBallance(final Long userId) throws UserNotFoundException, AccountBallanceNotFoundException {
-        AccountBallance accountBallance = accountBallanceService.getAccountByUser(userId);
-        return new AccountBallance(
-                accountBallance.getUser(),
-                accountBallance.getPln(),
-                accountBallance.getUsd(),
-                accountBallance.getEur(),
-                accountBallance.getChf(),
-                accountBallance.getBtc()
-        );
-    }
 }

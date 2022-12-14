@@ -33,4 +33,9 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleWrongValidationException(WrongValidationException exception) {
         return new ResponseEntity<>("Wrong account validation",HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(CurrencyNotFoundException.class)
+    public ResponseEntity<Object> handleCurrencyNotFoundException(CurrencyNotFoundException exception) {
+        return new ResponseEntity<>("Wrong currency",HttpStatus.BAD_REQUEST);
+    }
 }
