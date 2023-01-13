@@ -140,13 +140,13 @@ public class TransactionService {
         }
     }
 
-    private boolean accountBallanceValidationForBuy(final Long userId, double sum, String curTo)
+    public boolean accountBallanceValidationForBuy(final Long userId, double sum, String curTo)
             throws UserNotFoundException, AccountBallanceNotFoundException {
         double curBallance = accountBallanceService.getCurrencyAccountBallance(userId,curTo);
         return curBallance >= sum;
     }
 
-    private boolean accountBallanceValidationForSell(final Long userId, double sellQty, String curFrom)
+    public boolean accountBallanceValidationForSell(final Long userId, double sellQty, String curFrom)
             throws UserNotFoundException, AccountBallanceNotFoundException {
         double curBallance = accountBallanceService.getCurrencyAccountBallance(userId,curFrom);
         return curBallance >= sellQty;

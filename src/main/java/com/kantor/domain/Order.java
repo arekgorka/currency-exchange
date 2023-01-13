@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class Order {
     private User user;
 
     @Column(name = "DATETIME")
-    private LocalDate datetime;
+    private LocalDateTime datetime;
 
     @NotNull
     @Column(name = "TRANSACTION")
@@ -33,7 +34,7 @@ public class Order {
 
     @NotNull
     @Column(name = "CUR_FROM")
-    private CurrenciesEnum curFrom;
+    private String curFrom;
 
     @NotNull
     @Column(name = "QTY_FROM")
@@ -41,11 +42,7 @@ public class Order {
 
     @NotNull
     @Column(name = "CUR_TO")
-    private CurrenciesEnum curTo;
-
-    @NotNull
-    @Column(name = "QTY_TO")
-    private double qtyTo;
+    private String curTo;
 
     @NotNull
     @Column(name = "EXCHANGE_RATE")
@@ -55,15 +52,14 @@ public class Order {
     @Column(name = "ORDER_STATUS")
     private String orderStatus;
 
-    public Order(User user, BuyOrSell buyOrSell, CurrenciesEnum curFrom,
-                 double qtyFrom, CurrenciesEnum curTo, double qtyTo, double exchangeRate) {
+    public Order(User user, BuyOrSell buyOrSell, String curFrom,
+                 double qtyFrom, String curTo, double exchangeRate) {
         this.user = user;
-        this.datetime = LocalDate.now();
+        this.datetime = LocalDateTime.now();
         this.buyOrSell = buyOrSell;
         this.curFrom = curFrom;
         this.qtyFrom = qtyFrom;
         this.curTo = curTo;
-        this.qtyTo = qtyTo;
         this.exchangeRate = exchangeRate;
         this.orderStatus = OrderStatus.ORDERED;
     }
