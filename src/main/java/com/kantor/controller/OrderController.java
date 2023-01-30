@@ -1,6 +1,8 @@
 package com.kantor.controller;
 
 import com.kantor.domain.dto.OrderDto;
+import com.kantor.exception.OrderNotFoundException;
+import com.kantor.exception.UserNotFoundException;
 import com.kantor.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -16,14 +18,14 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok(orderService.createOrder(orderDto));
+    @PostMapping(value = "{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId, @RequestBody OrderDto orderDto) throws UserNotFoundException {
+        return ResponseEntity.ok(orderService.createOrder(userId, orderDto));
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderDto> updateOrder(@RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok(orderService.updateOrder(orderDto));
+    @PutMapping(value = "{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderDto> updateOrder(@PathVariable Long orderId, @RequestBody OrderDto orderDto) throws OrderNotFoundException {
+        return ResponseEntity.ok(orderService.updateOrder(orderId, orderDto));
     }
 
     @DeleteMapping(value = "{orderId}")
@@ -33,12 +35,17 @@ public class OrderController {
     }
 
     @GetMapping(value = "{orderId}")
-    public ResponseEntity<OrderDto> getOrder(@PathVariable Long orderId) {
+    public ResponseEntity<OrderDto> getOrder(@PathVariable Long orderId) throws OrderNotFoundException {
         return ResponseEntity.ok(orderService.getOrder(orderId));
     }
 
-    @GetMapping(value = "/orderHistory/user/{userId}")
-    public ResponseEntity<List<OrderDto>> getOrders(@PathVariable Long userId) {
-        return ResponseEntity.ok(orderService.getOrders(userId));
+    @GetMapping(value = "/ordersHistory/{userId}")
+    public ResponseEntity<List<OrderDto>> getOrdersHistory(@PathVariable Long userId) {
+        return ResponseEntity.ok(orderService.getAllOrdersByUserId(userId));
+    }
+
+    @GetMapping(value = "/currentOrders/{userId}")
+    public ResponseEntity<List<OrderDto>> getCurrentOrders(@PathVariable Long userId) {
+        return ResponseEntity.ok(orderService.getCurrentOrdersByUserId(userId));
     }
 }

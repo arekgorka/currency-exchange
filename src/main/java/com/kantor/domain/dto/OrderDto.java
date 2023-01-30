@@ -20,8 +20,8 @@ public class OrderDto {
     private String curTo;
     private double exchangeRate;
 
-    public OrderDto(LocalDateTime dateTime, BuyOrSell buyOrSell, String curFrom, double qtyFrom, String curTo, double exchangeRate) {
-        this.dateTime = dateTime;
+    //do testów
+    public OrderDto(BuyOrSell buyOrSell, String curFrom, double qtyFrom, String curTo, double exchangeRate) {
         this.buyOrSell = buyOrSell;
         this.curFrom = curFrom;
         this.qtyFrom = qtyFrom;

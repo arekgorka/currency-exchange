@@ -29,6 +29,8 @@ public class OrderMapper {
 
     public OrderDto mapToOrderDto(Order order) {
         return new OrderDto(
+                order.getId(),
+                order.getUser().getId(),
                 order.getDatetime(),
                 order.getBuyOrSell(),
                 order.getCurFrom(),
