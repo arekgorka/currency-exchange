@@ -15,6 +15,8 @@ import com.kantor.webclient.currency.CurrencyWebClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -76,18 +78,34 @@ public class CurrencyService {
     public void saveUSDollar() {
         CurrencyDto currencyDto = getCurrencyBidAndAsk(CurrenciesEnum.USD.name());
         USDollar usDollar = currencyMapper.mapToUSDDollar(currencyDto);
-        usDollarRepository.save(usDollar);
+        double buyDollar = roundTo2(usDollar.getBuy());
+        double sellDollar = roundTo2(usDollar.getSell());
+        USDollar roundedUSDollar = new USDollar(buyDollar,sellDollar, usDollar.getName());
+        usDollarRepository.save(roundedUSDollar);
     }
 
     public void saveEuro() {
         CurrencyDto currencyDto = getCurrencyBidAndAsk(CurrenciesEnum.EUR.name());
         Euro euro = currencyMapper.mapToEuro(currencyDto);
-        euroRepository.save(euro);
+        double buyEuro = roundTo2(euro.getBuy());
+        double sellEuro = roundTo2(euro.getSell());
+        Euro roundedEuro = new Euro(buyEuro,sellEuro, euro.getName());
+        euroRepository.save(roundedEuro);
     }
 
     public void saveSwissFranc() {
         CurrencyDto currencyDto = getCurrencyBidAndAsk(CurrenciesEnum.CHF.name());
         SwissFranc swissFranc = currencyMapper.mapToSwissFranc(currencyDto);
-        swissFrancRepository.save(swissFranc);
+        double buyFranc = roundTo2(swissFranc.getBuy());
+        double sellFranc = roundTo2(swissFranc.getSell());
+        SwissFranc roundedSwissFranc = new SwissFranc(buyFranc,sellFranc, swissFranc.getName());
+        swissFrancRepository.save(roundedSwissFranc);
+    }
+
+    public static double roundTo2(double value) {
+        int precision = 2;
+        BigDecimal bigDecimal = new BigDecimal(value);
+        bigDecimal = bigDecimal.setScale(precision, RoundingMode.HALF_UP);
+        return bigDecimal.doubleValue();
     }
 }

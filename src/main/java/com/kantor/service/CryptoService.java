@@ -11,6 +11,8 @@ import com.kantor.webclient.crypto.CryptoWebClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.Optional;
 
@@ -49,6 +51,16 @@ public class CryptoService {
     public void saveBitcoin() {
         CryptoDto cryptoDto = getCryptoRates(CurrenciesEnum.BTC.name());
         Bitcoin bitcoin = cryptoMapper.mapToBitcoin(cryptoDto);
-        bitcoinRepository.save(bitcoin);
+        double buyBitcoin = roundTo4(bitcoin.getBuy());
+        double sellBitcoin = roundTo4(bitcoin.getSell());
+        Bitcoin roundedBitcoin = new Bitcoin(buyBitcoin,sellBitcoin, bitcoin.getName());
+        bitcoinRepository.save(roundedBitcoin);
+    }
+
+    public static double roundTo4(double value) {
+        int precision = 4;
+        BigDecimal bigDecimal = new BigDecimal(value);
+        bigDecimal = bigDecimal.setScale(precision, RoundingMode.HALF_UP);
+        return bigDecimal.doubleValue();
     }
 }
