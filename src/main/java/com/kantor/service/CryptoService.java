@@ -49,7 +49,7 @@ public class CryptoService {
     }
 
     public void saveBitcoin() {
-        CryptoDto cryptoDto = getCryptoRates(CurrenciesEnum.BTC.name());
+        CryptoDto cryptoDto = getCryptoRates(Currencies.BTC);
         Bitcoin bitcoin = cryptoMapper.mapToBitcoin(cryptoDto);
         double buyBitcoin = roundTo4(bitcoin.getBuy());
         double sellBitcoin = roundTo4(bitcoin.getSell());

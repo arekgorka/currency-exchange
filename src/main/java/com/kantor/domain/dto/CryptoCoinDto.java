@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CryptoCoinDto {
 
-    private String name;
+    private String symbol;
     private double price;
 }

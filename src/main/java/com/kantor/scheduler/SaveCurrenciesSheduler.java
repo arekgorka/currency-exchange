@@ -15,7 +15,7 @@ public class SaveCurrenciesSheduler {
     private final CurrencyService currencyService;
     private final CryptoService cryptoService;
 
-    @Scheduled(cron = "0 0/5 * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void saveCurrenciesAndCrypto() {
         currencyService.saveUSDollar();
         currencyService.saveEuro();

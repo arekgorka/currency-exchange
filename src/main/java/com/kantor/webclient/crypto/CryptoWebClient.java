@@ -24,9 +24,9 @@ public class CryptoWebClient {
     private RestTemplate restTemplate = new RestTemplate();
 
     public CryptoDto getCryptoRates(String name) {
-        CryptoMainDto cryptoMainDto = callGetMethod("{name}" + CURRENCY_DETAILS ,CryptoMainDto.class, name);
+        CryptoMainDto cryptoMainDto = callGetMethod("{symbol}" + CURRENCY_DETAILS ,CryptoMainDto.class, name);
         return CryptoDto.builder()
-                .symbol(cryptoMainDto.getCoin().getName())
+                .symbol(cryptoMainDto.getCoin().getSymbol())
                 .buy(cryptoMainDto.getCoin().getPrice())
                 .sell(cryptoMainDto.getCoin().getPrice())
                 .build();
