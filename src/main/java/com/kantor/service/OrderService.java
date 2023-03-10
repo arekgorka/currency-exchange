@@ -73,7 +73,7 @@ public class OrderService {
         return orderMapper.mapToListOrderDto(orders);
     }
 
-    @Scheduled(cron = "* 0/5 * * * *")
+    @Scheduled(cron = "0 0/5 * * * *")
     public void completeOrders() throws CurrencyNotFoundException {
         List<Order> orderList = orderRepository.findAll();
         List<Order> orders = orderList.stream()
