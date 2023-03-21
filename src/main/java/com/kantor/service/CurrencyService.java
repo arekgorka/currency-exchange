@@ -15,10 +15,12 @@ import com.kantor.webclient.currency.CurrencyWebClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -36,42 +38,44 @@ public class CurrencyService {
     }
 
     public double getCurrencyBuyFromRepository(String code) throws CurrencyNotFoundException {
-        if (code.equals(Currencies.PLN)) {
-            return 1;
-        } else if (code.equals(Currencies.USD)) {
-            Optional<USDollar> usDollar = usDollarRepository.findAll().stream()
-                    .max(Comparator.comparing(USDollar::getId));
-            return usDollar.get().getBuy();
-        } else if (code.equals(Currencies.EUR)) {
-            Optional<Euro> euro = euroRepository.findAll().stream()
-                    .max(Comparator.comparing(Euro::getId));
-            return euro.get().getBuy();
-        } else if (code.equals(Currencies.CHF)) {
-            Optional<SwissFranc> swissFranc = swissFrancRepository.findAll().stream()
-                    .max(Comparator.comparing(SwissFranc::getId));
-            return swissFranc.get().getBuy();
-        } else {
-            throw new CurrencyNotFoundException();
+        switch (code) {
+            case Currencies.PLN:
+                return 1;
+            case Currencies.USD:
+                Optional<USDollar> usDollar = usDollarRepository.findAll().stream()
+                        .max(Comparator.comparing(USDollar::getId));
+                return usDollar.orElseThrow().getBuy();
+            case Currencies.EUR:
+                Optional<Euro> euro = euroRepository.findAll().stream()
+                        .max(Comparator.comparing(Euro::getId));
+                return euro.orElseThrow().getBuy();
+            case Currencies.CHF:
+                Optional<SwissFranc> swissFranc = swissFrancRepository.findAll().stream()
+                        .max(Comparator.comparing(SwissFranc::getId));
+                return swissFranc.orElseThrow().getBuy();
+            default:
+                throw new CurrencyNotFoundException();
         }
     }
 
     public double getCurrencySellFromRepository(String code) throws CurrencyNotFoundException {
-        if (code.equals(Currencies.PLN)) {
-            return 1;
-        } else if (code.equals(Currencies.USD)) {
-            Optional<USDollar> usDollar = usDollarRepository.findAll().stream()
-                    .max(Comparator.comparing(USDollar::getId));
-            return usDollar.get().getSell();
-        } else if (code.equals(Currencies.EUR)) {
-            Optional<Euro> euro = euroRepository.findAll().stream()
-                    .max(Comparator.comparing(Euro::getId));
-            return euro.get().getSell();
-        } else if (code.equals(Currencies.CHF)) {
-            Optional<SwissFranc> swissFranc = swissFrancRepository.findAll().stream()
-                    .max(Comparator.comparing(SwissFranc::getId));
-            return swissFranc.get().getSell();
-        } else {
-            throw new CurrencyNotFoundException();
+        switch (code) {
+            case Currencies.PLN:
+                return 1;
+            case Currencies.USD:
+                Optional<USDollar> usDollar = usDollarRepository.findAll().stream()
+                        .max(Comparator.comparing(USDollar::getId));
+                return usDollar.orElseThrow().getSell();
+            case Currencies.EUR:
+                Optional<Euro> euro = euroRepository.findAll().stream()
+                        .max(Comparator.comparing(Euro::getId));
+                return euro.orElseThrow().getSell();
+            case Currencies.CHF:
+                Optional<SwissFranc> swissFranc = swissFrancRepository.findAll().stream()
+                        .max(Comparator.comparing(SwissFranc::getId));
+                return swissFranc.orElseThrow().getSell();
+            default:
+                throw new CurrencyNotFoundException();
         }
     }
 

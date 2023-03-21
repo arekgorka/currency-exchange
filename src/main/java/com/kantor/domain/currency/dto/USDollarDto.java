@@ -13,4 +13,6 @@ public class USDollarDto {
     private Double buy;
     private Double sell;
     private String name;
+
+
 }

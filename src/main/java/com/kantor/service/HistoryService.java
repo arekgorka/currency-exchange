@@ -1,5 +1,8 @@
 package com.kantor.service;
 
+import com.kantor.domain.Currencies;
+import com.kantor.domain.CurrenciesEnum;
+import com.kantor.domain.Currency;
 import com.kantor.domain.currency.Bitcoin;
 import com.kantor.domain.currency.Euro;
 import com.kantor.domain.currency.SwissFranc;
@@ -8,6 +11,8 @@ import com.kantor.domain.currency.dto.BitcoinDto;
 import com.kantor.domain.currency.dto.EuroDto;
 import com.kantor.domain.currency.dto.SwissFrancDto;
 import com.kantor.domain.currency.dto.USDollarDto;
+import com.kantor.domain.dto.CurrencyDto;
+import com.kantor.exception.CurrencyNotFoundException;
 import com.kantor.mapper.CryptoMapper;
 import com.kantor.mapper.CurrencyMapper;
 import com.kantor.repository.BitcoinRepository;
@@ -66,7 +71,7 @@ public class HistoryService {
         return cryptoMapper.mapToListBitcoinDto(bitcoins);
     }
 
-    public List<Object> getCurrencyHistory(String currencyName) {
-        return new ArrayList<>();
+    public List<CurrencyDto> getCurrencyHistory(String currencyName) throws CurrencyNotFoundException {
+        return new ArrayList<>(); //tymczasowa zaślepka
     }
 }

@@ -1,9 +1,12 @@
 package com.kantor.controller;
 
+import com.kantor.domain.Currency;
 import com.kantor.domain.currency.dto.BitcoinDto;
 import com.kantor.domain.currency.dto.EuroDto;
 import com.kantor.domain.currency.dto.SwissFrancDto;
 import com.kantor.domain.currency.dto.USDollarDto;
+import com.kantor.domain.dto.CurrencyDto;
+import com.kantor.exception.CurrencyNotFoundException;
 import com.kantor.service.HistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +45,7 @@ public class HistoryController {
     }
 
     @GetMapping(value = "{currencyName}")
-    public ResponseEntity<List<Object>> getCurrencyHistory(@PathVariable String currencyName) {
+    public ResponseEntity<List<CurrencyDto>> getCurrencyHistory(@PathVariable String currencyName) throws CurrencyNotFoundException {
         return ResponseEntity.ok(historyService.getCurrencyHistory(currencyName));
     }
 }
