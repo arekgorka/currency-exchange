@@ -27,6 +27,8 @@ public class CryptoServiceTests {
         double btc = cryptoService.getCryptoBuyFromRepository("bitcoin");
         //Then
         assertEquals(41000.3544, btc);
+        //CleanUp
+        bitcoinRepository.delete(bitcoin);
     }
 
     @Test
@@ -47,6 +49,8 @@ public class CryptoServiceTests {
         double btc = cryptoService.getCryptoSellFromRepository("bitcoin");
         //Then
         assertEquals(40500.3544, btc);
+        //CleanUp
+        bitcoinRepository.delete(bitcoin);
     }
 
     @Test

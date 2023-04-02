@@ -1,7 +1,6 @@
 package com.kantor.service;
 
-public class CurrencyServiceTests {
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-    // to do
 
-}
