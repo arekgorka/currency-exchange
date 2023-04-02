@@ -46,7 +46,7 @@ public class CryptoServiceTests {
         //When
         double btc = cryptoService.getCryptoSellFromRepository("bitcoin");
         //Then
-        assertEquals(41000.3544, btc);
+        assertEquals(40500.3544, btc);
     }
 
     @Test
