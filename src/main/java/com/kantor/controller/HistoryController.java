@@ -1,11 +1,10 @@
 package com.kantor.controller;
 
-import com.kantor.domain.Currency;
 import com.kantor.domain.currency.dto.BitcoinDto;
 import com.kantor.domain.currency.dto.EuroDto;
 import com.kantor.domain.currency.dto.SwissFrancDto;
 import com.kantor.domain.currency.dto.USDollarDto;
-import com.kantor.domain.dto.CurrencyDto;
+import com.kantor.domain.dto.CurrencyTemplateDto;
 import com.kantor.exception.CurrencyNotFoundException;
 import com.kantor.service.HistoryService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,7 @@ public class HistoryController {
 
     private final HistoryService historyService;
 
-    @GetMapping(value = "usd")
+    /*@GetMapping(value = "usd")
     public ResponseEntity<List<USDollarDto>> getUSDollarHistory() {
         return ResponseEntity.ok(historyService.getUSDollarHistory());
     }
@@ -42,10 +41,10 @@ public class HistoryController {
     @GetMapping(value = "btc")
     public ResponseEntity<List<BitcoinDto>> getBitcoinHistory() {
         return ResponseEntity.ok(historyService.getBitcoinHistory());
-    }
+    }*/
 
     @GetMapping(value = "{currencyName}")
-    public ResponseEntity<List<CurrencyDto>> getCurrencyHistory(@PathVariable String currencyName) throws CurrencyNotFoundException {
+    public ResponseEntity<List<CurrencyTemplateDto>> getCurrencyHistory(@PathVariable String currencyName) throws CurrencyNotFoundException {
         return ResponseEntity.ok(historyService.getCurrencyHistory(currencyName));
     }
 }

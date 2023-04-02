@@ -1,18 +1,15 @@
 package com.kantor.domain.currency.dto;
 
+import com.kantor.domain.dto.CurrencyTemplateDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-@AllArgsConstructor
-public class USDollarDto {
-    private Long id;
-    private LocalDateTime dateTime;
-    private Double buy;
-    private Double sell;
-    private String name;
+public class USDollarDto extends CurrencyTemplateDto {
 
-
+    public USDollarDto(Long id, LocalDateTime dateTime, Double buy, Double sell, String name) {
+        super(id, dateTime, buy, sell, name);
+    }
 }

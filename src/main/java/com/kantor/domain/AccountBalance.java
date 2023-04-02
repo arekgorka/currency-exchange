@@ -7,15 +7,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "ACCOUNT_BALLANCES")
-public class AccountBallance {
+@Entity(name = "ACCOUNT_BALANCES")
+public class AccountBalance {
 
     @Id
     @GeneratedValue
@@ -45,7 +44,7 @@ public class AccountBallance {
     @Column(name = "BTC")
     private double btc;
 
-    public AccountBallance(User user) {
+    public AccountBalance(User user) {
         this.user = user;
         this.datetime = LocalDateTime.now();
         this.pln = 0.00;
@@ -55,7 +54,7 @@ public class AccountBallance {
         this.btc = 0.00;
     }
 
-    public AccountBallance(User user, double pln, double usd, double eur, double chf, double btc) {
+    public AccountBalance(User user, double pln, double usd, double eur, double chf, double btc) {
         this.user = user;
         this.datetime = LocalDateTime.now();
         this.pln = pln;
@@ -65,7 +64,7 @@ public class AccountBallance {
         this.btc = btc;
     }
 
-    public AccountBallance(Long id, User user, double pln, double usd, double eur, double chf, double btc) {
+    public AccountBalance(Long id, User user, double pln, double usd, double eur, double chf, double btc) {
         this.id = id;
         this.user = user;
         this.pln = pln;

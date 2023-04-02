@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @EnableScheduling
 @Component
 @RequiredArgsConstructor
-public class SaveCurrenciesSheduler {
+public class SaveCurrenciesScheduler {
 
     private final CurrencyService currencyService;
     private final CryptoService cryptoService;

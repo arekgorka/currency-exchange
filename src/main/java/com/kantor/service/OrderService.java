@@ -13,8 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -92,7 +90,7 @@ public class OrderService {
                     try {
                         transactionService.createBuyTransaction(order.getUser().getId(),transactionDto);
                         orderRepository.updateOrderStatus(order.getId(), OrderStatus.DONE);
-                    } catch (UserNotFoundException | AccountBallanceNotFoundException | WrongValidationException e) {
+                    } catch (UserNotFoundException | AccountBalanceNotFoundException | WrongValidationException e) {
                         orderRepository.updateOrderStatus(order.getId(), OrderStatus.CANCELLED);
                     }
                 }
@@ -109,7 +107,7 @@ public class OrderService {
                     try {
                         transactionService.createSellTransaction(order.getUser().getId(),transactionDto);
                         orderRepository.updateOrderStatus(order.getId(), OrderStatus.DONE);
-                    } catch (UserNotFoundException | AccountBallanceNotFoundException | WrongValidationException e) {
+                    } catch (UserNotFoundException | AccountBalanceNotFoundException | WrongValidationException e) {
                         orderRepository.updateOrderStatus(order.getId(), OrderStatus.CANCELLED);
                     }
                 }

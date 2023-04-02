@@ -19,8 +19,8 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>("User already exist.", HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(AccountBallanceNotFoundException.class)
-    public ResponseEntity<Object> handleAccountBallanceNotFoundException(AccountBallanceNotFoundException exception) {
+    @ExceptionHandler(AccountBalanceNotFoundException.class)
+    public ResponseEntity<Object> handleAccountBalanceNotFoundException(AccountBalanceNotFoundException exception) {
         return new ResponseEntity<>("Account doesn't exist.",HttpStatus.BAD_REQUEST);
     }
 

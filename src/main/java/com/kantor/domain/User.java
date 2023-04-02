@@ -50,11 +50,11 @@ public class User {
     private LocalDate created;
 
     @OneToMany(
-            targetEntity = AccountBallance.class,
+            targetEntity = AccountBalance.class,
             mappedBy = "user",
             fetch = FetchType.LAZY
     )
-    private List<AccountBallance> accountBallances;
+    private List<AccountBalance> accountBalances;
 
     @OneToMany(
             targetEntity = Transaction.class,
@@ -77,7 +77,7 @@ public class User {
         this.password = password;
         this.mail = mail;
         this.created = LocalDate.now();
-        this.accountBallances = new ArrayList<>();
+        this.accountBalances = new ArrayList<>();
         this.transactions = new ArrayList<>();
         this.orders = new ArrayList<>();
     }

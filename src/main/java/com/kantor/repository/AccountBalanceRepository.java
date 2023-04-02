@@ -1,6 +1,6 @@
 package com.kantor.repository;
 
-import com.kantor.domain.AccountBallance;
+import com.kantor.domain.AccountBalance;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,9 +9,9 @@ import java.util.List;
 
 @Transactional
 @Repository
-public interface AccountBallanceRepository extends CrudRepository<AccountBallance,Long> {
+public interface AccountBalanceRepository extends CrudRepository<AccountBalance,Long> {
 
-    List<AccountBallance> findAccountBallanceByUserId(Long userId);
+    List<AccountBalance> findAccountBalanceByUserId(Long userId);
 
     void deleteByUserId(Long userId);
 }
