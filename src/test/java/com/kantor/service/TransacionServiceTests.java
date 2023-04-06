@@ -58,7 +58,7 @@ public class TransacionServiceTests {
         //Given
         User user = new User("John","Snow","JSnow","qwerty","johnsnow@gmail.com");
         User savedUser = userRepository.save(user);
-        Long userId = userRepository.findUserById(savedUser.getId()).get().getId();
+        Long userId = userRepository.findById(savedUser.getId()).get().getId();
         Transaction transaction = new Transaction(user, LocalDateTime.now(),BuyOrSell.BUY,Currencies.USD,500,Currencies.PLN,2400,4.8);
         //When
         Transaction savedTransaction = transactionRepository.save(transaction);
@@ -74,7 +74,7 @@ public class TransacionServiceTests {
         //Given
         User user = new User("John","Snow","JSnow","qwerty","johnsnow@gmail.com");
         User savedUser = userRepository.save(user);
-        Long userId = userRepository.findUserById(savedUser.getId()).get().getId();
+        Long userId = userRepository.findById(savedUser.getId()).get().getId();
         AccountBalance accountBalance = new AccountBalance(1L,user,10000,0,0,0,0);
         accountBalanceRepository.save(accountBalance);
         TransactionDto transactionDto = new TransactionDto(BuyOrSell.BUY,Currencies.USD,500,Currencies.PLN);
@@ -150,7 +150,7 @@ public class TransacionServiceTests {
     }
 
     @Test
-    void accountBallanceValidationForBuyTest() throws UserNotFoundException, AccountBalanceNotFoundException {
+    void accountBallanceValidationForBuyTest() throws UserNotFoundException, AccountBalanceNotFoundException, CurrencyNotFoundException {
         //Given
         User user = new User("John","Snow","JSnow","qwerty","johnsnow@gmail.com");
         User savedUser = userRepository.save(user);

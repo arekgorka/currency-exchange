@@ -88,7 +88,8 @@ public class OrderService {
                             order.getCurTo()
                     );
                     try {
-                        transactionService.createBuyTransaction(order.getUser().getId(),transactionDto);
+                        Long userId = order.getUser().getId();
+                        transactionService.createBuyTransaction(userId,transactionDto);
                         orderRepository.updateOrderStatus(order.getId(), OrderStatus.DONE);
                     } catch (UserNotFoundException | AccountBalanceNotFoundException | WrongValidationException e) {
                         orderRepository.updateOrderStatus(order.getId(), OrderStatus.CANCELLED);

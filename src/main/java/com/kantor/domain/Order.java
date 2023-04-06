@@ -63,4 +63,16 @@ public class Order {
         this.exchangeRate = exchangeRate;
         this.orderStatus = OrderStatus.ORDERED;
     }
+
+    public Order(User user, BuyOrSell buyOrSell, String curFrom,
+                 double qtyFrom, String curTo, double exchangeRate, String orderStatus) {
+        this.user = user;
+        this.datetime = LocalDateTime.now();
+        this.buyOrSell = buyOrSell;
+        this.curFrom = curFrom;
+        this.qtyFrom = qtyFrom;
+        this.curTo = curTo;
+        this.exchangeRate = exchangeRate;
+        this.orderStatus = orderStatus;
+    }
 }

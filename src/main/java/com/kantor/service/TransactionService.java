@@ -42,7 +42,7 @@ public class TransactionService {
             double oldCurFrom = accountBalanceService.getCurrencyAccountBalance(userId,curFrom);
             double newCurFrom = oldCurFrom + buyQty;
             double oldCurTo = accountBalanceService.getCurrencyAccountBalance(userId,curTo);
-            double newCurTo = oldCurTo - sum;
+            double newCurTo = oldCurTo - sum / getSellForAnyCurrencyFromRepository(curTo);
             //zaktualizowanie stanu konta - zapis nowego stanu konta
             AccountBalance newAccountBalance = changeToNewAccountBalance(userId);
             updateCurBalance(curFrom, newCurFrom, newAccountBalance);
@@ -80,7 +80,7 @@ public class TransactionService {
             double oldCurFrom = accountBalanceService.getCurrencyAccountBalance(userId,curFrom);
             double newCurFrom = oldCurFrom - sellQty;
             double oldCurTo = accountBalanceService.getCurrencyAccountBalance(userId,curTo);
-            double newCurTo = oldCurTo + sum;
+            double newCurTo = oldCurTo + sum / getBuyForAnyCurrencyFromRepository(curTo);
             //zaktualizowanie stanu konta - zapis nowego stanu konta
             AccountBalance newAccountBalance = changeToNewAccountBalance(userId);
             updateCurBalance(curFrom, newCurFrom, newAccountBalance);
@@ -138,15 +138,17 @@ public class TransactionService {
     }
 
     public boolean accountBalanceValidationForBuy(final Long userId, double sum, String curTo)
-            throws UserNotFoundException, AccountBalanceNotFoundException {
-        double curBallance = accountBalanceService.getCurrencyAccountBalance(userId,curTo);
-        return curBallance >= sum;
+            throws UserNotFoundException, AccountBalanceNotFoundException, CurrencyNotFoundException {
+        double curBalance = accountBalanceService.getCurrencyAccountBalance(userId,curTo);
+        return curBalance * getSellForAnyCurrencyFromRepository(curTo) >= sum;
     }
 
+    //sellQty = 1000
+    //curBalance = 3000
     public boolean accountBalanceValidationForSell(final Long userId, double sellQty, String curFrom)
             throws UserNotFoundException, AccountBalanceNotFoundException {
-        double curBallance = accountBalanceService.getCurrencyAccountBalance(userId,curFrom);
-        return curBallance >= sellQty;
+        double curBalance = accountBalanceService.getCurrencyAccountBalance(userId,curFrom);
+        return curBalance >= sellQty;
     }
 
     public void updateCurBalance(String cur, double newCur, AccountBalance newAccountBalance) {

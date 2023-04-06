@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TransactionMapper {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     public Transaction mapToTransaction(Long userId, TransactionDto transactionDto) throws UserNotFoundException {
         return new Transaction(
-                userService.findUserById(userId),
+                userRepository.findById(userId).orElseThrow(UserNotFoundException::new),
                 transactionDto.getBuyOrSell(),
                 transactionDto.getCurFrom(),
                 transactionDto.getQtyFrom(),

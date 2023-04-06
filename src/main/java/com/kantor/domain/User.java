@@ -21,7 +21,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", unique = true)
     private Long id;
 
@@ -89,5 +89,9 @@ public class User {
         this.login = login;
         this.password = password;
         this.mail = mail;
+        this.created = LocalDate.now();
+        this.accountBalances = new ArrayList<>();
+        this.transactions = new ArrayList<>();
+        this.orders = new ArrayList<>();
     }
 }

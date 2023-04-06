@@ -35,6 +35,6 @@ public class UserService {
     }
 
     public User findUserById(final Long userId) throws UserNotFoundException {
-        return userRepository.findUserById(userId).orElseThrow(UserNotFoundException::new);
+        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 }
