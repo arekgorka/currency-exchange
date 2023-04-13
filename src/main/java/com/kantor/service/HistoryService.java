@@ -10,7 +10,7 @@ import com.kantor.domain.currency.dto.EuroDto;
 import com.kantor.domain.currency.dto.SwissFrancDto;
 import com.kantor.domain.currency.dto.USDollarDto;
 import com.kantor.domain.dto.CurrencyTemplateDto;
-import com.kantor.exception.CurrencyNotFoundException;
+import com.kantor.exception.CurrencyNotSupportedException;
 import com.kantor.mapper.CryptoMapper;
 import com.kantor.mapper.CurrencyMapper;
 import com.kantor.repository.BitcoinRepository;
@@ -69,7 +69,7 @@ public class HistoryService {
         return cryptoMapper.mapToListBitcoinDto(bitcoins);
     }
 
-    public List<CurrencyTemplateDto> getCurrencyHistory(String currencyName) {
+    public List<CurrencyTemplateDto> getCurrencyHistory(String currencyName) throws CurrencyNotSupportedException {
         switch (currencyName) {
             case Currencies.EUR:
                 return Collections.singletonList((CurrencyTemplateDto) getEuroHistory());
@@ -80,7 +80,7 @@ public class HistoryService {
             case Currencies.BTC:
                 return Collections.singletonList((CurrencyTemplateDto) getBitcoinHistory());
             default:
-                return new ArrayList<>();
+                throw new CurrencyNotSupportedException();
         }
     }
 }

@@ -15,12 +15,9 @@ import com.kantor.webclient.currency.CurrencyWebClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service

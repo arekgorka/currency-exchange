@@ -43,4 +43,9 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleOrderNotFoundException(OrderNotFoundException exception) {
         return new ResponseEntity<>("Order with given id doesn't exist",HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(CurrencyNotSupportedException.class)
+    public ResponseEntity<Object> handleCurrencyNotSupportedException(CurrencyNotFoundException exception) {
+        return new ResponseEntity<>("Currency not supported",HttpStatus.BAD_REQUEST);
+    }
 }
